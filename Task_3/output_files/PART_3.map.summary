@@ -1,0 +1,16 @@
+Analysis & Synthesis Status : Successful - Mon Nov 04 00:00:23 2024
+Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Revision Name : PART_3
+Top-level Entity Name : top_level_lcd
+Family : MAX 10
+Total logic elements : 445
+    Total combinational functions : 424
+    Dedicated logic registers : 228
+Total registers : 228
+Total pins : 22
+Total virtual pins : 0
+Total memory bits : 0
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0
+UFM blocks : 0
+ADC blocks : 0

@@ -1,0 +1,109 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "mosi",
+					"strict" : false
+				},
+				{
+					"name" : "sclk",
+					"strict" : false
+				},
+				{
+					"name" : "cs_b",
+					"strict" : false
+				},
+				{
+					"name" : "lcd_en",
+					"strict" : false
+				},
+				{
+					"name" : "lcd_rs",
+					"strict" : false
+				},
+				{
+					"name" : "detect",
+					"strict" : false
+				},
+				{
+					"name" : "led_output[0]",
+					"strict" : false
+				},
+				{
+					"name" : "led_output[1]",
+					"strict" : false
+				},
+				{
+					"name" : "led_output[2]",
+					"strict" : false
+				},
+				{
+					"name" : "led_output[3]",
+					"strict" : false
+				},
+				{
+					"name" : "led_output[4]",
+					"strict" : false
+				},
+				{
+					"name" : "led_output[5]",
+					"strict" : false
+				},
+				{
+					"name" : "led_output[6]",
+					"strict" : false
+				},
+				{
+					"name" : "led_output[7]",
+					"strict" : false
+				},
+				{
+					"name" : "lcd1[0]",
+					"strict" : false
+				},
+				{
+					"name" : "lcd1[1]",
+					"strict" : false
+				},
+				{
+					"name" : "lcd1[2]",
+					"strict" : false
+				},
+				{
+					"name" : "lcd1[3]",
+					"strict" : false
+				},
+				{
+					"name" : "lcd1[4]",
+					"strict" : false
+				},
+				{
+					"name" : "lcd1[5]",
+					"strict" : false
+				},
+				{
+					"name" : "lcd1[7]",
+					"strict" : false
+				},
+				{
+					"name" : "rst",
+					"strict" : false
+				},
+				{
+					"name" : "clk_in",
+					"strict" : false
+				},
+				{
+					"name" : "lcd_rst",
+					"strict" : false
+				},
+				{
+					"name" : "miso",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

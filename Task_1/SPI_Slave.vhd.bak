@@ -1,0 +1,30 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity spi_slave is
+	port(MOSI,SCLK,CS,reset: in std_logic;
+			MISO: out std_logic);
+end entity;
+
+architecture behaviour of spi_slave is
+	signal slave_data: std_logic_vector(7 downto 0) := "00000101"; --Data that the slave will send to master via MISO
+	signal bit_count: integer := 0; 											 --Count for number of bits transmitted (for 8 bits it's range is 0-7)
+begin
+	process(SCLK,reset)
+	begin
+		if reset = '1' then
+			bit_count <= 0;
+			MISO <= '0';
+		elsif rising_edge(SCLK) then
+			if CS = '0' then
+				if bit_count < 8 then
+					MISO <= slave_data(bit_count);
+					bit_count <= bit_count + 1;
+				else
+					bit_count <= 0;
+				end if;
+			end if;
+		end if;
+	end process;
+end architecture;

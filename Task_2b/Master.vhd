@@ -1,0 +1,94 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity master is
+	port(
+		clk_in      : in std_logic;
+		miso_adc       : in std_logic;
+		mosi_adc       : out std_logic;
+		mosi_dac       : out std_logic;
+		sclk_adc : out std_logic;
+		sclk_dac : out std_logic;
+		data_out    : out std_logic_vector(9 downto 0);
+		adc_cs: out std_logic;
+		dac_cs: out std_logic
+	);
+end entity master;
+
+architecture behavior of master is
+	
+	signal clk_counter : integer := 0;    -- Clock cycle counter for timing control
+
+	-- SPI signals
+	signal cs_adc, cs_dac : std_logic := '1';
+	signal mosi_temp : std_logic := '1';
+	signal adc_data : std_logic_vector(9 downto 0) := (others => '0');
+	constant adc_config : std_logic_vector(16 downto 0) := "10000000000000001";
+	signal spi_data : std_logic_vector(16 downto 0);
+	signal dac_config : std_logic_vector(3 downto 0) := "0111";
+
+begin
+
+
+spi_control : process(clk_in)
+begin
+	if falling_edge(clk_in) then
+		-- Increment or reset cycle counter
+		if clk_counter < 35 then
+			clk_counter <= clk_counter + 1;
+		else
+			clk_counter <= 0;
+		end if;
+
+		-- Chip select control
+		if clk_counter = 1 then
+			cs_adc <= '0';
+		elsif clk_counter = 18 then
+			cs_adc <= '1';
+		elsif clk_counter = 19 then
+			cs_dac <= '0';
+		elsif clk_counter = 35 then
+			cs_dac <= '1';
+		end if;
+
+		-- SPI Data Transfer
+		if (cs_adc = '1') and (cs_dac = '1') then
+			-- Prepare to send ADC or DAC data
+			if clk_counter < 15 then
+				mosi_temp <= '1';
+				spi_data <= adc_config;
+			else
+				mosi_temp <= '0';
+				spi_data <= "111" & adc_data & "0000";
+			end if;
+		elsif (cs_adc ='0') or (cs_dac = '0') then
+			-- Shift data for transmission
+			mosi_temp <= spi_data(16);
+			spi_data <= spi_data(15 downto 0) & mosi_temp;
+		end if;
+	end if;
+end process;
+
+-- Data Reception 
+data_reception : process(clk_in)
+begin
+	if cs_adc = '0' and rising_edge(clk_in) then
+		-- Shift MISO data into buffer
+		adc_data <= adc_data(8 downto 0) & miso_adc;
+	end if;
+
+	-- Data stored when chip select is disabled
+	if cs_adc = '1' then
+		data_out <= adc_data;
+	end if;
+end process;
+
+
+adc_cs <= cs_adc;
+dac_cs <= cs_dac;
+sclk_adc <= clk_in;
+sclk_dac <= clk_in;
+mosi_adc <= mosi_temp;
+mosi_dac <= mosi_temp;
+
+end architecture behavior;

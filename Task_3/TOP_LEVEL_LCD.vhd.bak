@@ -1,0 +1,62 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity top_level_lcd is
+	port (
+		rst, clk_in, miso : in std_logic;
+		mosi, sclk, cs_b : out std_logic;
+		lcd_rst : in std_logic;
+		lcd_rw, lcd_en, lcd_rs, detect : out std_logic;
+		lcd1 : out std_logic_vector(7 downto 0)
+	);
+end entity;
+
+architecture beh of top_level_lcd is
+	component test is
+		port(
+			inp : in std_logic_vector(9 downto 0);
+			clk : in std_logic;
+			rst : in std_logic;
+			lcd_rw : out std_logic;
+			lcd_en : out std_logic;
+			lcd_rs : out std_logic;
+			lcd1 : out std_logic_vector(7 downto 0);
+			detect : out std_logic
+		);
+	end component;
+	
+	component spi_master_2a is
+		port (
+			rst, clk_in, miso : in std_logic;
+			mosi, sclk, cs_b : out std_logic;
+			d_out : out std_logic_vector(9 downto 0)
+		);
+	end component;
+	
+	signal adc_value : std_logic_vector(9 downto 0);
+	
+begin
+	
+	spi : spi_master_2a port map (
+		rst => rst,
+		clk_in => clk_in,
+		miso => miso,
+		mosi => mosi,
+		sclk => sclk,
+		cs_b => cs_b,
+		d_out => adc_value
+	);
+	
+	lcd : test port map (
+		inp => adc_value,
+		clk => clk_in,
+		rst => lcd_rst,
+		lcd_rw => lcd_rw,
+		lcd_en => lcd_en,
+		lcd_rs => lcd_rs,
+		lcd1 => lcd1,
+		detect => detect
+	);
+	
+end architecture;

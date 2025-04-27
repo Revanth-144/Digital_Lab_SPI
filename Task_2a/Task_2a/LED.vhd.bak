@@ -1,0 +1,88 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity led is
+    port (
+        clk_in   : in std_logic;             -- 10 MHz clock signal (from FPGA)
+        rst    : in std_logic;             -- Active-high reset signal
+        MOSI     : out std_logic;
+        MISO     : in std_logic;
+        SCLK     : out std_logic;
+        CS_b 		  : out std_logic; 
+        reg_a : out std_logic_vector(9 downto 0)
+    );
+end led;
+
+architecture Behavioral of led is
+    signal temp_data : std_logic_vector(9 downto 0); -- 11 bits to include start and config bits
+    signal master_data      : std_logic_vector(6 downto 0) := "1100000"; -- Start bit + config bits
+    signal counter1     : integer := 0;
+    signal counter2     : integer := 0;
+    signal CS_in    : std_logic := '1';
+    signal counter      : integer := 1;
+    signal clk          : std_logic := '0';
+begin
+    -- Generate 1 MHz clock from 10 MHz input clock
+    process(clk_in, rst)
+    begin
+        if rst = '1' then
+            counter <= 1;
+            clk <= '0';
+        elsif rising_edge(clk_in) then
+            if counter = 5 then
+                counter <= 1;
+                clk <= not clk;
+            else
+                counter <= counter + 1;
+            end if;
+        end if;
+    end process;
+
+    -- Combined process for transmission and reception
+    process(clk, rst)
+    begin
+        if rst = '1' then
+            counter1 <= 0;
+            counter2 <= 0;
+            temp_data <= (others => '0');
+            CS_in <= '1';
+            reg_a <= (others => '0');
+        elsif rising_edge(clk) then
+            if CS_in = '0' then
+                -- Sample data on MISO on rising edge of clk
+                if counter1 = 7 then
+                    if counter2 < 10 then
+                        temp_data(9 - counter2)<=  miso;
+                        counter2 <= counter2 + 1;
+                    end if;
+                end if;
+            end if;
+
+            -- Reset counter2 if a full transmission is complete
+            if counter1 = 7 and counter2 = 10 then
+                counter2 <= 0;
+            end if;
+        elsif falling_edge(clk) then
+            -- Send data on MOSI on falling edge of clk
+            if counter1 < 7 then
+                CS_in <= '0';
+                 MOSI <= master_data(6 - counter1);
+                counter1 <= counter1 + 1;
+            end if;
+
+            -- Reset and prepare for next transmission
+            if counter1 = 7 and counter2 = 10 then
+                counter1 <= 0;
+                CS_in <= '1';  -- Deactivate CS
+                reg_a<= temp_data(9 downto 0);  -- Store the received ADC data
+            end if;
+        end if;
+    end process;
+
+    -- Continuous assignments
+    CS_b <= CS_in;
+    SCLK <= clk;
+
+end Behavioral;

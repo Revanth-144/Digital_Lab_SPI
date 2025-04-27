@@ -1,0 +1,56 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity spi_master_2a is
+	port (
+		reset, clk_input, miso_signal : in std_logic;
+		mosi_signal, sclk_signal, chip_select_n : out std_logic;
+		data_out : out std_logic_vector(9 downto 0)
+	);
+end entity;
+
+architecture beh of spi_master_2a is
+	component clock_divider is
+		port (clk_in : in std_logic; clk_out : out std_logic);
+	end component;
+	signal data_register : std_logic_vector(9 downto 0);
+	signal bit_counter : integer := 0;
+	signal clk_divided : std_logic;
+begin
+
+	clk_div : clock_divider
+		port map (clk_in => clk_input, clk_out => clk_divided);
+		
+	sclk_signal <= clk_divided;
+	data_out <= data_register;
+	
+	process(clk_divided, reset)
+	begin
+		if reset = '1' then
+			chip_select_n <= '1';
+			bit_counter <= 0;
+			data_register <= (others => 'X');
+		elsif falling_edge(clk_divided) then
+			case bit_counter is
+				when 0 | 1 => mosi_signal <= '1';
+				when 2 | 3 | 4 => mosi_signal <= '0';
+				when others => mosi_signal <= 'X';
+			end case;
+			if bit_counter <= 16 then
+				chip_select_n <= '0'; 
+				bit_counter <= bit_counter + 1;
+			elsif bit_counter = 17 then
+				chip_select_n <= '1'; 
+				bit_counter <= bit_counter + 1;
+			else
+				chip_select_n <= '1';
+			end if;
+		elsif rising_edge(clk_divided) then
+			if bit_counter >= 8 and bit_counter <= 17 then
+				data_register(17 - bit_counter) <= miso_signal;
+			end if;	
+		end if;
+	end process;
+	
+end architecture;

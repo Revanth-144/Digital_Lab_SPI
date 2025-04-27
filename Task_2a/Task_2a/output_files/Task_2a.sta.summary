@@ -1,0 +1,185 @@
+------------------------------------------------------------
+Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'clk_in'
+Slack : -8.138
+TNS   : -309.463
+
+Type  : Slow 1200mV 85C Model Setup 'test:lcd|inp_detect:covid_det_instance|bit_index[0]'
+Slack : -7.496
+TNS   : -64.627
+
+Type  : Slow 1200mV 85C Model Setup 'test:lcd|lcd_clk'
+Slack : -7.141
+TNS   : -239.457
+
+Type  : Slow 1200mV 85C Model Setup 'led:spi|clk'
+Slack : -4.979
+TNS   : -375.133
+
+Type  : Slow 1200mV 85C Model Setup 'test:lcd|clk_slow'
+Slack : -2.418
+TNS   : -39.028
+
+Type  : Slow 1200mV 85C Model Hold 'led:spi|clk'
+Slack : 0.341
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'test:lcd|inp_detect:covid_det_instance|bit_index[0]'
+Slack : 0.347
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'test:lcd|clk_slow'
+Slack : 0.361
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'clk_in'
+Slack : 0.710
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'test:lcd|lcd_clk'
+Slack : 0.725
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk_in'
+Slack : -3.000
+TNS   : -153.187
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'led:spi|clk'
+Slack : -1.487
+TNS   : -127.882
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'test:lcd|lcd_clk'
+Slack : -1.487
+TNS   : -59.480
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'test:lcd|clk_slow'
+Slack : -1.487
+TNS   : -46.097
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'test:lcd|inp_detect:covid_det_instance|bit_index[0]'
+Slack : 0.332
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Setup 'clk_in'
+Slack : -7.500
+TNS   : -274.859
+
+Type  : Slow 1200mV 0C Model Setup 'test:lcd|inp_detect:covid_det_instance|bit_index[0]'
+Slack : -7.195
+TNS   : -60.875
+
+Type  : Slow 1200mV 0C Model Setup 'test:lcd|lcd_clk'
+Slack : -6.679
+TNS   : -222.372
+
+Type  : Slow 1200mV 0C Model Setup 'led:spi|clk'
+Slack : -4.568
+TNS   : -349.672
+
+Type  : Slow 1200mV 0C Model Setup 'test:lcd|clk_slow'
+Slack : -2.214
+TNS   : -34.722
+
+Type  : Slow 1200mV 0C Model Hold 'test:lcd|inp_detect:covid_det_instance|bit_index[0]'
+Slack : 0.258
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'led:spi|clk'
+Slack : 0.304
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'test:lcd|clk_slow'
+Slack : 0.322
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'clk_in'
+Slack : 0.669
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'test:lcd|lcd_clk'
+Slack : 0.685
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk_in'
+Slack : -3.000
+TNS   : -153.187
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'led:spi|clk'
+Slack : -1.487
+TNS   : -127.882
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'test:lcd|lcd_clk'
+Slack : -1.487
+TNS   : -59.480
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'test:lcd|clk_slow'
+Slack : -1.487
+TNS   : -46.097
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'test:lcd|inp_detect:covid_det_instance|bit_index[0]'
+Slack : 0.217
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Setup 'test:lcd|inp_detect:covid_det_instance|bit_index[0]'
+Slack : -2.830
+TNS   : -24.684
+
+Type  : Fast 1200mV 0C Model Setup 'clk_in'
+Slack : -2.611
+TNS   : -59.756
+
+Type  : Fast 1200mV 0C Model Setup 'test:lcd|lcd_clk'
+Slack : -2.036
+TNS   : -64.515
+
+Type  : Fast 1200mV 0C Model Setup 'led:spi|clk'
+Slack : -1.504
+TNS   : -114.302
+
+Type  : Fast 1200mV 0C Model Setup 'test:lcd|clk_slow'
+Slack : -0.294
+TNS   : -2.088
+
+Type  : Fast 1200mV 0C Model Hold 'test:lcd|inp_detect:covid_det_instance|bit_index[0]'
+Slack : 0.073
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'led:spi|clk'
+Slack : 0.143
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'test:lcd|clk_slow'
+Slack : 0.151
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'test:lcd|lcd_clk'
+Slack : 0.184
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'clk_in'
+Slack : 0.242
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk_in'
+Slack : -3.000
+TNS   : -106.337
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'led:spi|clk'
+Slack : -1.000
+TNS   : -86.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'test:lcd|lcd_clk'
+Slack : -1.000
+TNS   : -40.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'test:lcd|clk_slow'
+Slack : -1.000
+TNS   : -31.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'test:lcd|inp_detect:covid_det_instance|bit_index[0]'
+Slack : 0.367
+TNS   : 0.000
+
+------------------------------------------------------------

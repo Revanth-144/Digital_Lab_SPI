@@ -1,0 +1,51 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity spi_master is
+	port(clk,reset,MISO: in std_logic;
+			SCLK,CS,MOSI: out std_logic;
+			data_out: out std_logic_vector(7 downto 0));
+end entity;
+-- data_out is output signal which stores data received from slave
+
+architecture behaviour of spi_master is
+	signal master_data: std_logic_vector(7 downto 0) := "00000101" --Data that the master will send to slave via MOSI
+	signal bit_count: integer := 0; --Count for number of bits transmitted (for 8 bits it's range is 0-7)
+	signal temp_data: std_logic_vector(7 downto 0); --Temporary storage for data received from slave via MISO
+	signal spi_clk: std_logic := '0'; --Signal for generating SPI clock(SCLK)
+	signal sclk_count: integer := 0; --Counter used to divide the input clock (clk) to create a 10 MHz clock for the SPI communication
+begin
+	process(clk,reset)
+	begin
+		if reset = '1' then
+			CS <= '1';
+			bit_count <= 0;
+			temp_data <= (others => '0');
+			SCLK <= '0';
+		elsif rising_edge(clk) then
+			if sclk_count = 4 then
+				spi_clk <= not spi_clk;
+				sclk_count <= 0;
+			else
+				sclk_count <= sclk_count + 1;
+			end if;
+			
+			if spi_clk = '1' then
+				if CS = '1' then
+					CS <= '0';
+				else
+					if bit_count < 8 then
+						MOSI <= master_data(bit_count);
+						temp_data(bit_count) <= MISO;
+						bit_count <= bit_count + 1;
+					else
+						bit_count <= 0;
+						CS <= '1';
+						data_out <= temp_data;
+					end if;
+				end if;
+			end if;
+		SCLK <= spi_clk;
+		end if;
+	end process;
+end architecture;

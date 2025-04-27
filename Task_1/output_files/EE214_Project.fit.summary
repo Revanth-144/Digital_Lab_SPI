@@ -1,0 +1,18 @@
+Fitter Status : Successful - Wed Oct 23 00:28:47 2024
+Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Revision Name : EE214_Project
+Top-level Entity Name : spi_master
+Family : MAX 10
+Device : 10M08DAF484C8G
+Timing Models : Final
+Total logic elements : 90 / 8,064 ( 1 % )
+    Total combinational functions : 87 / 8,064 ( 1 % )
+    Dedicated logic registers : 42 / 8,064 ( < 1 % )
+Total registers : 42
+Total pins : 10 / 250 ( 4 % )
+Total virtual pins : 0
+Total memory bits : 0 / 387,072 ( 0 % )
+Embedded Multiplier 9-bit elements : 0 / 48 ( 0 % )
+Total PLLs : 0 / 2 ( 0 % )
+UFM blocks : 0 / 1 ( 0 % )
+ADC blocks : 0 / 1 ( 0 % )

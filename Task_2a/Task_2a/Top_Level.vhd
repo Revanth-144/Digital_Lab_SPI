@@ -1,0 +1,52 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity top_level is
+	port (rst, clk_in, miso : in std_logic;
+			mosi, sclk, cs_b : out std_logic;
+			lcd_rst : in std_logic;
+			lcd_rw, lcd_en, lcd_rs, detect : out std_logic;
+			led_output : out std_logic_vector(7 downto 0);
+			lcd1 : out std_logic_vector(7 downto 0));
+end entity;
+
+architecture beh of top_level is
+	component test is
+		port( 
+--			clk_slow		: in std_logic;
+			inp 			: in std_logic_vector(9 downto 0);
+			clk			: in  std_logic;
+			rst 			: in  std_logic;
+			lcd_rw 		: out std_logic;                         	--read & write control
+			lcd_en 		: out std_logic;                         	--enable control
+         lcd_rs 		: out std_logic;                         	--data or command control
+			lcd1  		: out std_logic_vector(7 downto 0);			--see pin planning in krypton manual 
+--			b11 			: out std_logic;
+--		 	b12 			: out std_logic;
+		   detect 		: out std_logic);
+	end component;
+	
+	component LED is
+		    port (
+        clk_in   : in std_logic;             -- 10 MHz clock signal (from FPGA)
+        rst    : in std_logic;             -- Active-high reset signal
+        MOSI     : out std_logic;
+        MISO     : in std_logic;
+        SCLK     : out std_logic;
+        CS_b       : out std_logic;
+        reg_a : out std_logic_vector(9 downto 0)
+    );
+	end component;
+	
+	signal adc_value : std_logic_vector(9 downto 0);
+	
+begin
+	
+	spi : LED port map (rst=>rst, clk_in=>clk_in, miso=>miso, mosi=>mosi, sclk=>sclk, cs_b=>cs_b, reg_a=>adc_value);
+	lcd : test port map (inp=>adc_value, clk=>clk_in, rst=>lcd_rst, lcd_rw=>lcd_rw, lcd_en=>lcd_en, lcd_rs=>lcd_rs, lcd1=>lcd1, detect=>detect);
+	
+	led_output <= adc_value(9 downto 2);
+end architecture;
+			
+			

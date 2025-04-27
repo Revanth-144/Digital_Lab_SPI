@@ -1,0 +1,27 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity top_level_entity is
+	port(clk : in std_logic;
+			master_data_out,slave_data_out : out std_logic_vector(2 downto 0));
+end entity;
+
+architecture behaviour of top_level_entity is
+	signal cs,sclk,mosi,miso : std_logic;
+begin
+	inst1: entity work.SPI_Master 
+			port map(
+						miso => miso,
+						clk => clk,
+						cs => cs,
+						sclk => sclk,
+						mosi => mosi,
+						master_data_out => master_data_out);
+	inst2: entity work.SPI_Slave
+			port map(
+						cs => cs,
+						sclk => sclk,
+						mosi => mosi,
+						miso => miso,
+						slave_data_out => slave_data_out);
+end architecture;											
